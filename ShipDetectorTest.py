@@ -40,6 +40,17 @@ class MyTestCase(unittest.TestCase):
         solution = [[0, 0]]
         your_solution = shipDetector(image)
 
+        self.assertListEqual(your_solution, solution)
+
+    def test_propi_2_x_2_rec (self):
+        image = [[240, 202], [147, 105]]
+        your_solution = shipDetector(image)
+        solution = [[0, 0]]
+        your_solution = shipDetector(image)
+
+        self.assertListEqual(your_solution, solution)
+
+''' Testos Proporcionats i que miren les diagonals
     def test_practice_validator_3_x_3(self):
         image = image_generator(3)
         your_solution = shipDetector(image['image'])
