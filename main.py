@@ -16,23 +16,38 @@ def image_generator(n_size=10):
 # TODO: Realizar cada una de vuestras funciones para detectar barcos dentro de la imagen de entrada que se encuentra en la variable "image2D".
 def shipDetector(image):
     checked_Ships = []
-    for line in range(len(image)):
-        for column in range(len(image)):
-            checked_Ships = check_near_ships(image, checked_Ships, line, column)
+    for row in range(len(image)):
+        for column in range(len(image[0])):
+            checked_Ships = check_near_ships(image, checked_Ships, row, column)
     print("Llista resultant" + str(checked_Ships))
     return checked_Ships
 
-def check_near_ships(image, checked_ship, line, column):
-    directions = directions_avaliable(image, line, column)
+def ship_detector_rec(image, row = 0, column = -1):
+    column += 1
+    if column == len(image[0]):
+        column = 0
+        row += 1
+    if row == len(image):
+        return []
+
+    print(row, column)
+    return check_near_ships(image, ship_detector_rec(image, row, column), row, column)
+
+
+
+
+def check_near_ships(image, checked_ship, row, column):
+    directions = directions_avaliable(image, row, column)
     for direction in directions:
         #print("Valors a comparar: " + str(image[line][column]) + " " + str(image[direction[0]][direction[1]]))
-        if(image[line][column] < image[direction[0]][direction[1]]):
+        if(image[row][column] < image[direction[0]][direction[1]]):
             return checked_ship
 
-    checked_ship.append([line, column])
+    checked_ship.append([row, column])
     return checked_ship
-#TODO: En este programa, debereis generar las imagenes de costos correspondientes tal y como hicimos en laboratorios y en la práctica 1.
 
+
+#TODO: En este programa, debereis generar las imagenes de costos correspondientes tal y como hicimos en laboratorios y en la práctica 1.
 def directions_avaliable(image, line, column):
     directions = []
     directions.append([line - 1, column])
